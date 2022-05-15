@@ -1,13 +1,10 @@
 import { IsDefined, IsEmail } from 'class-validator';
 
-export class CreateUserRequestBody {
+export class UserSignInRequestBody {
   @IsDefined()
   @IsEmail()
   email: string;
 
   @IsDefined()
   password: string;
-
-  @IsDefined()
-  name: string;
 }

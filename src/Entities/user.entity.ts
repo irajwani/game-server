@@ -5,11 +5,11 @@ export default class User {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @Column()
+  @Column({ unique: true })
   public email: string;
 
   @Column()
-  private password: string;
+  public password: string;
 
   @Column()
   public name: string;
@@ -19,4 +19,7 @@ export default class User {
 
   @Column()
   public hard_currency: number;
+
+  // @Column('uuid', { array: true })
+  // public clubs: string[];
 }
