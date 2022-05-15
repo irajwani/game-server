@@ -12,7 +12,10 @@ export default class Club {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @Column({ unique: true })
+  @Column()
+  public createdBy: string;
+
+  @Column()
   public name: string;
 
   @Column('simple-array')

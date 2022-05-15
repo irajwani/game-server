@@ -27,11 +27,32 @@ const ERRORS = {
     message:
       "This endpoint is a protected resource. Please specify a 'token' in headers",
   },
-  INSUFFICIENT_FUNDS: {
+  CLUB_NOT_FOUND: {
     code: 6,
-    error: 'INSUFFICIENT_FUNDS_ERROR',
+    error: 'CLUB_NOT_FOUND_ERROR',
+    message: 'Club with that ID does not exist.',
+  },
+  CLUB_MEMBERS_LIMIT_REACHED: {
+    code: 7,
+    error: 'CLUB_MEMBERS_LIMIT_REACHED_ERROR',
+    message: 'The number of allowed members for this club has been reached.',
+  },
+  CLUB_CREATION_INSUFFICIENT_FUNDS_EXCEPTION: {
+    code: 8,
+    error: 'CLUB_MEMBERS_LIMIT_REACHED_ERROR',
     message:
-      'You have insufficient funds to perform this action. Please top up your wallet.',
+      'You have insufficient funds to perform this action. Please top up your wallet with 50 hard_currency',
+  },
+  CLUB_JOIN_INSUFFICIENT_FUNDS_EXCEPTION: {
+    code: 9,
+    error: 'CLUB_MEMBERS_LIMIT_REACHED_ERROR',
+    message:
+      'You have insufficient funds to perform this action. Please top up your wallet with 100 soft_currency',
+  },
+  CLUB_MEMBER_EXISTS_EXCEPTION: {
+    code: 11,
+    error: 'CLUB_MEMBER_EXISTS_EXCEPTION_ERROR',
+    message: 'User is already part of this club',
   },
 };
 

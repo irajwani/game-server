@@ -31,9 +31,39 @@ export class MissingTokenHeaderException extends HttpException {
   }
 }
 
-export class InsufficientFundsException extends HttpException {
+export class ClubNotFoundException extends HttpException {
   constructor() {
-    super(ERRORS.INSUFFICIENT_FUNDS, HttpStatus.BAD_REQUEST);
+    super(ERRORS.CLUB_NOT_FOUND, HttpStatus.BAD_REQUEST);
+  }
+}
+
+export class ClubMembersLimitReachedException extends HttpException {
+  constructor() {
+    super(ERRORS.CLUB_MEMBERS_LIMIT_REACHED, HttpStatus.BAD_REQUEST);
+  }
+}
+
+export class InsufficientFundsToCreateClubException extends HttpException {
+  constructor() {
+    super(
+      ERRORS.CLUB_CREATION_INSUFFICIENT_FUNDS_EXCEPTION,
+      HttpStatus.BAD_REQUEST,
+    );
+  }
+}
+
+export class InsufficientFundsToJoinClubException extends HttpException {
+  constructor() {
+    super(
+      ERRORS.CLUB_JOIN_INSUFFICIENT_FUNDS_EXCEPTION,
+      HttpStatus.BAD_REQUEST,
+    );
+  }
+}
+
+export class ClubMemberExistsException extends HttpException {
+  constructor() {
+    super(ERRORS.CLUB_MEMBER_EXISTS_EXCEPTION, HttpStatus.BAD_REQUEST);
   }
 }
 

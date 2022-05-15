@@ -6,7 +6,6 @@ import { ClubModule } from './Club/club.module';
 import { DatabaseModule } from './Configurations/DB/database.module';
 import { AuthMiddleware } from './Common/Middleware/auth.middleware';
 import { ClubController } from './Club/club.controller';
-import { UserService } from './User/user.service';
 
 @Module({
   imports: [
@@ -16,7 +15,6 @@ import { UserService } from './User/user.service';
     UserModule,
     ClubModule,
   ],
-  // providers: [UserService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

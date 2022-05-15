@@ -66,7 +66,7 @@ export class UserService {
   }: Record<string, string>): Promise<Omit<IUser, 'password'>> {
     const user = await this.getUserByEmail(email);
     await UserService.verifyPassword(password, user.password);
-    const tokenCode = await this.getUserToken(user.id);
+    const tokenCode = await this.getTokenByUser(user.id);
     Object.assign(user, { tokenCode });
     return formatUser(user);
   }
@@ -94,7 +94,7 @@ export class UserService {
     return tokenCode;
   }
 
-  private async getUserToken(user: string): Promise<string> {
+  private async getTokenByUser(user: string): Promise<string> {
     let tokenCode;
     try {
       ({ tokenCode } = await this.tokenRepository.findOneBy({

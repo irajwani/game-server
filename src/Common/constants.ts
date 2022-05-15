@@ -1,4 +1,5 @@
 export default {
   CLUB_CREATION_COST: 50,
-  CLUB_LIMIT: 50,
+  CLUB_ENTRY_COST: 100,
+  CLUB_MEMBERS_LIMIT: 50,
 };
