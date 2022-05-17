@@ -136,13 +136,14 @@ export class ClubController {
       await this.clubService.donateToClub(donationRequestId, amount, user);
     return response.status(HttpStatus.OK).json({
       id,
+      clubId,
       excess,
       isFulfilled,
-      message: `You have donated ${amount} soft_currency to for donation request with ID: ${donationRequestId}. It has ${
+      message: `You have donated ${amount} soft_currency. It has ${
         !isFulfilled ? 'not' : ''
       } reached its requested amount. ${
         excess > 0
-          ? `Excess of ${excess} will be allocated next time the user, who created this donation request, creates a donation request.`
+          ? `Excess donation of ${excess} will be allocated next time the user, who created this donation request, creates a donation request.`
           : ''
       }`,
     });
