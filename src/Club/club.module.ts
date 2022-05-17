@@ -4,9 +4,10 @@ import { ClubController } from './club.controller';
 import { ClubService } from './club.service';
 import Club from '../Entities/club.entity';
 import { UserModule } from '../User/user.module';
+import DonationRequest from '../Entities/donation-request.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Club]), UserModule],
+  imports: [TypeOrmModule.forFeature([Club, DonationRequest]), UserModule],
   controllers: [ClubController],
   providers: [ClubService],
 })

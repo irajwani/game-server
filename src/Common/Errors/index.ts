@@ -45,25 +45,55 @@ export class ClubMembersLimitReachedException extends HttpException {
 
 export class InsufficientFundsToCreateClubException extends HttpException {
   constructor() {
-    super(
-      ERRORS.CLUB_CREATION_INSUFFICIENT_FUNDS_EXCEPTION,
-      HttpStatus.BAD_REQUEST,
-    );
+    super(ERRORS.CLUB_CREATION_INSUFFICIENT_FUNDS, HttpStatus.BAD_REQUEST);
   }
 }
 
 export class InsufficientFundsToJoinClubException extends HttpException {
   constructor() {
-    super(
-      ERRORS.CLUB_JOIN_INSUFFICIENT_FUNDS_EXCEPTION,
-      HttpStatus.BAD_REQUEST,
-    );
+    super(ERRORS.CLUB_JOIN_INSUFFICIENT_FUNDS, HttpStatus.BAD_REQUEST);
   }
 }
 
 export class ClubMemberExistsException extends HttpException {
   constructor() {
-    super(ERRORS.CLUB_MEMBER_EXISTS_EXCEPTION, HttpStatus.BAD_REQUEST);
+    super(ERRORS.CLUB_MEMBER_EXISTS, HttpStatus.BAD_REQUEST);
+  }
+}
+
+export class NotClubMemberException extends HttpException {
+  constructor() {
+    super(ERRORS.NOT_CLUB_MEMBER, HttpStatus.BAD_REQUEST);
+  }
+}
+
+export class DonationRequestTooSoonException extends HttpException {
+  constructor() {
+    super(ERRORS.DONATION_REQUEST_TOO_SOON, HttpStatus.BAD_REQUEST);
+  }
+}
+
+export class DonationRequestNotFoundException extends HttpException {
+  constructor() {
+    super(ERRORS.DONATION_REQUEST_NOT_FOUND, HttpStatus.BAD_REQUEST);
+  }
+}
+
+export class DonationRequestExpiredException extends HttpException {
+  constructor() {
+    super(ERRORS.DONATION_REQUEST_EXPIRED, HttpStatus.BAD_REQUEST);
+  }
+}
+
+export class InsufficientFundsException extends HttpException {
+  constructor() {
+    super(ERRORS.CLUB_DONATE_INSUFFICIENT_FUNDS, HttpStatus.BAD_REQUEST);
+  }
+}
+
+export class CannotDonateToOwnRequestException extends HttpException {
+  constructor() {
+    super(ERRORS.CANNOT_DONATE_TO_OWN_REQUEST, HttpStatus.BAD_REQUEST);
   }
 }
 

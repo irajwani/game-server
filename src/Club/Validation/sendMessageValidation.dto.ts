@@ -1,7 +1,7 @@
 import { IsDefined, IsString } from 'class-validator';
 
-export class CreateClubRequestBody {
+export class SendMessageRequestBody {
   @IsDefined()
   @IsString()
-  name: string;
+  message: string;
 }

@@ -21,12 +21,12 @@ export default class Club {
   @Column('simple-array')
   public members: string[];
 
-  @Column('simple-array')
+  @Column('jsonb')
   public messages: IMessage[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
 }
