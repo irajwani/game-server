@@ -12,7 +12,7 @@ import {
   Put,
   Patch,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { ClubService } from './club.service';
 import { ProtectedResourceRequest } from '../Common/Types/protectedResourceRequest';
@@ -26,6 +26,7 @@ import { DonationRequestIdRequestParams } from './Validation/DonationRequestIdPa
 
 const { DONATION_REQUEST_EXPIRATION_MINUTES } = Constants;
 
+@ApiHeader({ name: 'token' })
 @Controller('clubs')
 @ApiTags('clubs')
 export class ClubController {
