@@ -85,6 +85,12 @@ export class DonationRequestExpiredException extends HttpException {
   }
 }
 
+export class DonationRequestFulfilledException extends HttpException {
+  constructor() {
+    super(ERRORS.DONATION_REQUEST_FULFILLED, HttpStatus.BAD_REQUEST);
+  }
+}
+
 export class InsufficientFundsException extends HttpException {
   constructor() {
     super(ERRORS.CLUB_DONATE_INSUFFICIENT_FUNDS, HttpStatus.BAD_REQUEST);

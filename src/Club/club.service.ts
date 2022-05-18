@@ -12,6 +12,7 @@ import {
   ClubMembersLimitReachedException,
   ClubNotFoundException,
   DonationRequestExpiredException,
+  DonationRequestFulfilledException,
   DonationRequestNotFoundException,
   DonationRequestTooSoonException,
   InsufficientFundsException,
@@ -127,10 +128,13 @@ export class ClubService {
     const club = await this.getClub(clubId);
     if (!club) throw new ClubNotFoundException();
     if (!club.members.includes(userId)) throw new NotClubMemberException();
-    const lastDonationRequest = await this.donationRequestRepository.findOneBy({
-      clubId,
-      userId,
+    const lastDonationRequest = await this.donationRequestRepository.findOne({
+      where: [{ clubId, userId }],
+      order: { createdAt: 'DESC' },
     });
+
+    let donated = 0;
+    let isFulfilled = false;
 
     if (lastDonationRequest) {
       const now = moment();
@@ -139,17 +143,42 @@ export class ClubService {
         MANDATORY_MINUTES_SINCE_LAST_DONATION_REQUEST
       )
         throw new DonationRequestTooSoonException();
+
+      donated = ClubService.calculateDonatedFromExcess(lastDonationRequest);
+      isFulfilled = donated === DONATION_REQUEST_AMOUNT;
     }
 
     const donationRequestData: Partial<IDonationRequest> = {
       userId,
       clubId,
-      donated:
-        lastDonationRequest && lastDonationRequest.excess > 0
-          ? lastDonationRequest.excess
+      donated,
+      excess:
+        lastDonationRequest &&
+        lastDonationRequest.excess > DONATION_REQUEST_AMOUNT
+          ? lastDonationRequest.excess - DONATION_REQUEST_AMOUNT
           : 0,
+      isFulfilled,
     };
+
+    if (isFulfilled)
+      await this.userService.updateUserWallet({
+        userId: lastDonationRequest.userId,
+        type: 'soft_currency',
+        amount: DONATION_REQUEST_AMOUNT,
+      });
+
     return await this.donationRequestRepository.save(donationRequestData);
+  }
+
+  private static calculateDonatedFromExcess(donationRequest: IDonationRequest) {
+    let donated = 0;
+    if (donationRequest && donationRequest.excess > 0) {
+      if (donationRequest.excess > DONATION_REQUEST_AMOUNT) {
+        return DONATION_REQUEST_AMOUNT;
+      }
+      donated += donationRequest.excess;
+    }
+    return donated;
   }
 
   public async donateToClub(
@@ -159,10 +188,12 @@ export class ClubService {
   ): Promise<IDonateResponse> {
     const donationRequest = await this.donationRequestRepository.findOneBy({
       id: donationRequestId,
-      hasExpired: false,
-      isFulfilled: false,
     });
+
     if (!donationRequest) throw new DonationRequestNotFoundException();
+    if (donationRequest.hasExpired) throw new DonationRequestExpiredException();
+    if (donationRequest.isFulfilled)
+      throw new DonationRequestFulfilledException();
 
     const club = await this.getClub(donationRequest.clubId);
     if (!club) throw new ClubNotFoundException();
@@ -187,7 +218,7 @@ export class ClubService {
 
     const amountAfterDonation = donationRequest.donated + amount;
     const excess = amountAfterDonation - donationRequest.requested;
-    const isFulfilled = amountAfterDonation > DONATION_REQUEST_AMOUNT;
+    const isFulfilled = amountAfterDonation >= DONATION_REQUEST_AMOUNT;
 
     await this.donationRequestRepository.update(
       { id: donationRequest.id },

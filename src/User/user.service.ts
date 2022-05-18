@@ -11,7 +11,7 @@ import {
   UserExistsException,
 } from '../Common/Errors';
 import Utils from '../Common/utils';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { IUpdateUserWallet } from './Types/wallet';
 import Token from '../Entities/token.entity';
 

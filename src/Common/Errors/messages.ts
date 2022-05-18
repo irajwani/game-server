@@ -80,13 +80,18 @@ const ERRORS = {
     error: 'DONATION_REQUEST_EXPIRED_ERROR',
     message: `The donation period of ${DONATION_REQUEST_EXPIRATION_MINUTES} minutes has expired for this donation request.`,
   },
-  CLUB_DONATE_INSUFFICIENT_FUNDS: {
+  DONATION_REQUEST_FULFILLED: {
     code: 15,
+    error: 'DONATION_REQUEST_FULFILLED_ERROR',
+    message: `This donation request has already been fulfilled and is no longer accepting donations.`,
+  },
+  CLUB_DONATE_INSUFFICIENT_FUNDS: {
+    code: 16,
     error: 'CLUB_DONATE_INSUFFICIENT_FUNDS_ERROR',
     message: `You have insufficient funds to perform this action.`,
   },
   CANNOT_DONATE_TO_OWN_REQUEST: {
-    code: 16,
+    code: 17,
     error: 'CANNOT_DONATE_TO_OWN_REQUEST_ERROR',
     message: `User is not allowed to donate to donation request they created.`,
   },
