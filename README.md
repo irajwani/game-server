@@ -16,7 +16,7 @@ $ docker build -t whatwapp-server .
 $ docker-compose up
 ```
 
-If the docker commands above fail, it might be a node version issue (I used node 12.18.1)
+Alternatively, if you would like to run the app locally, and node_modules fail to install, it might be a node version issue (I used node 12.18.1)
 In this case, install nvm with:
 
 ```bash
@@ -29,9 +29,11 @@ Then,
 ```bash
 $ nvm install 12.18.1
 $ nvm use 12.18.1
+$ npm i
+$ npm run dev
 ```
 
-and finally, repeat the docker commands
+and run the postgres container within docker
 
 ## Usage
 

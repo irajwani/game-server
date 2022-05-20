@@ -134,6 +134,7 @@ export class ClubService {
     });
 
     let donated = 0;
+    let excess = 0;
     let isFulfilled = false;
 
     if (lastDonationRequest) {
@@ -145,6 +146,8 @@ export class ClubService {
         throw new DonationRequestTooSoonException();
 
       donated = ClubService.calculateDonatedFromExcess(lastDonationRequest);
+      excess =
+        ClubService.calculateUpdatedExcessFromExcess(lastDonationRequest);
       isFulfilled = donated === DONATION_REQUEST_AMOUNT;
     }
 
@@ -152,11 +155,7 @@ export class ClubService {
       userId,
       clubId,
       donated,
-      excess:
-        lastDonationRequest &&
-        lastDonationRequest.excess > DONATION_REQUEST_AMOUNT
-          ? lastDonationRequest.excess - DONATION_REQUEST_AMOUNT
-          : 0,
+      excess,
       isFulfilled,
     };
 
@@ -179,6 +178,15 @@ export class ClubService {
       donated += donationRequest.excess;
     }
     return donated;
+  }
+
+  private static calculateUpdatedExcessFromExcess(
+    donationRequest: IDonationRequest,
+  ) {
+    if (donationRequest && donationRequest.excess > DONATION_REQUEST_AMOUNT) {
+      return donationRequest.excess - DONATION_REQUEST_AMOUNT;
+    }
+    return 0;
   }
 
   public async donateToClub(
